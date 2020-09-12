@@ -25,7 +25,7 @@ userApp.get('/', async (req,res) => {
 });
 
 userApp.get("/:id", async (req, res) => {
-    const snapshot = await db.collection('user').doc(req.params.id).get();
+    const snapshot = await db.collection('users').doc(req.params.id).get();
 
     const userId = snapshot.id;
     const userData = snapshot.data();
@@ -33,7 +33,7 @@ userApp.get("/:id", async (req, res) => {
     res.status(200).send(JSON.stringify({ id: userId, ...userData}));
 });
 
-userApp.put("/:id", async (req, res) => {
+userApp.patch("/:id", async (req, res) => {
     const body = req.body;
 
     await db.collection('users').doc(req.params.id).update({
@@ -54,7 +54,7 @@ userApp.post('/', async (req,res) => {
     res.status(201).send();
 });
 
-exports.user = functions.https.onRequest(userApp  );
+exports.user = functions.https.onRequest(userApp);
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
